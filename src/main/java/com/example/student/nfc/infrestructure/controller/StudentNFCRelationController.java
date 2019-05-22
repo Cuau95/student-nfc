@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
-import static org.springframework.http.ResponseEntity.status;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,13 +36,17 @@ public class StudentNFCRelationController {
     
     @PostMapping("/student/id/{idStudent}")
     public ResponseEntity<StudentNFCRelation> saveStudentNFCRelation(@PathVariable("idStudent") String idStudent) {
-        System.out.println(idStudent);
         StudentNFCRelation relationSaved = service.saveStudentNFCRelation(idStudent);
         HttpStatus status = OK;
         if(relationSaved.getAlumno() == null || relationSaved.getIdNfc() == null){
             status = NOT_FOUND;
         }
         return new ResponseEntity<>(relationSaved, status);
+    }
+    
+    @GetMapping("/nfc/id/{idNFC}")
+    public ResponseEntity<String> getStudentId(@PathVariable String idNFC) {
+        return new ResponseEntity<>(service.getIdStudentByidNFC(idNFC), OK);
     }
     
 }

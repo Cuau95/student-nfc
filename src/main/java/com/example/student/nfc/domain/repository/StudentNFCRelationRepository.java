@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface StudentNFCRelationRepository extends CrudRepository<StudentNFCRelationEntity, Integer> {
     
     public List<StudentNFCRelationEntity> findByIdAlumno(String id);
+    public StudentNFCRelationEntity findByIdNfc(String idNfc);
     
 }

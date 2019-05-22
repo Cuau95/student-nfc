@@ -35,15 +35,19 @@ public class StudentNFCRelationService {
         return relation;
     }
     
+    public Student getStudentById(String id) {
+        return studentService.getStudentById(id);
+    }
+    
+    public String getIdStudentByidNFC(String idNFC) {
+        return repository.findByIdNfc(idNFC).getIdAlumno();
+    }
+    
     private void updateStudent(String idStudent, String idNFC) {
         StudentNFCRelationEntity relationEntity = new StudentNFCRelationEntity();
         relationEntity.setIdAlumno(idStudent);
         relationEntity.setIdNfc(idNFC);
         saveNFCId(relationEntity);
-    }
-    
-    public Student getStudentById(String id) {
-        return studentService.getStudentById(id);
     }
     
     private StudentNFCRelationEntity getNFCId() {
