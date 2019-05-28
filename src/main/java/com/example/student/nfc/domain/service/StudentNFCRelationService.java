@@ -1,9 +1,11 @@
 package com.example.student.nfc.domain.service;
 
+import com.example.student.nfc.domain.helper.ServiceHelper;
 import com.example.student.nfc.domain.model.Student;
 import com.example.student.nfc.domain.model.StudentNFCRelation;
 import com.example.student.nfc.domain.model.StudentNFCRelationEntity;
 import com.example.student.nfc.domain.repository.StudentNFCRelationRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +14,13 @@ public class StudentNFCRelationService {
     
     private StudentService studentService;
     private StudentNFCRelationRepository repository;
+    private ServiceHelper helper;
 
     @Autowired
-    public StudentNFCRelationService(StudentService studentService, StudentNFCRelationRepository repository) {
+    public StudentNFCRelationService(StudentService studentService, StudentNFCRelationRepository repository, ServiceHelper helper) {
         this.studentService = studentService;
         this.repository = repository;
+        this.helper = helper;
     }
     
     public StudentNFCRelationEntity saveNFCId(StudentNFCRelationEntity nfc) {
@@ -41,6 +45,11 @@ public class StudentNFCRelationService {
     
     public String getIdStudentByidNFC(String idNFC) {
         return repository.findByIdNfc(idNFC).getIdAlumno();
+    }
+    
+    public List<StudentNFCRelation> getStudentNFCRelation() {
+        List<StudentNFCRelationEntity> entitiesList = (List<StudentNFCRelationEntity>)repository.findAll();
+        return helper.transformFromEntityToModel(entitiesList);
     }
     
     private void updateStudent(String idStudent, String idNFC) {

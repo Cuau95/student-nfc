@@ -1,15 +1,16 @@
 package com.example.student.nfc.infrestructure.controller;
 
-import com.example.student.nfc.domain.model.Student;
 import com.example.student.nfc.domain.model.StudentNFCRelation;
 import com.example.student.nfc.domain.model.StudentNFCRelationEntity;
 import com.example.student.nfc.domain.service.StudentNFCRelationService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ public class StudentNFCRelationController {
         return new ResponseEntity<>(nfcSaved, OK);
     }
     
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/student/id/{idStudent}")
     public ResponseEntity<StudentNFCRelation> saveStudentNFCRelation(@PathVariable("idStudent") String idStudent) {
         StudentNFCRelation relationSaved = service.saveStudentNFCRelation(idStudent);
@@ -47,6 +49,11 @@ public class StudentNFCRelationController {
     @GetMapping("/nfc/id/{idNFC}")
     public ResponseEntity<String> getStudentId(@PathVariable String idNFC) {
         return new ResponseEntity<>(service.getIdStudentByidNFC(idNFC), OK);
+    }
+    
+    @GetMapping("/relation")
+    public ResponseEntity<List<StudentNFCRelation>> getAllRelations() {
+        return new ResponseEntity<>(service.getStudentNFCRelation(), OK);
     }
     
 }
